@@ -30,13 +30,37 @@
     <div class="page-wrapper bg-gra-01 p-t-180 p-b-100 font-poppins">
         <div class="wrapper wrapper--w780">
             <div class="card card-3">
+                <div class="card-heading"></div>
                 <div class="card-body">
-                    <h2 class="title">Alumno ingresado con éxito</h2>
+                    <h2 class="title">Agregar Alumno</h2>
+                    <form th:action="@{/data}" method="POST">
                     
-						<div class="p-t-10">
-                            <button class="btn btn--pill btn--green" type="submit"><a style="text-decoration:none" href="/ingresar">Ingresar Nuevo Alumno</a></button>
+                        <div class="input-group">
+                            <input class="input--style-3" type="text" placeholder="Name" name="nombres">
                         </div>
-
+                        <div class="input-group">
+                            <input class="input--style-3" type="text" placeholder="LastName" name="apellidos">
+                        </div>
+                        <div class="input-group">
+                            <input class="input--style-3" type="date" placeholder="Birthdate" name="paramfecha">
+                            
+                        </div>
+                        <div class="input-group">
+                            <input class="input--style-3" type="text" placeholder="BirthDay Place" name="lugarNac">
+                        </div>
+                        <div class="input-group">
+                            <input class="input--style-3" type="text" placeholder="College" name="colegio">
+                        </div>
+                      	<div class="input-group">
+                            <input class="input--style-3" type="number" placeholder="TelPhone" name="tel">
+                        </div>
+                        <div class="input-group">
+                            <input class="input--style-3" type="number" placeholder="CelPhone" name="cel">
+                        </div>
+                        <div class="p-t-10">
+                            <button class="btn btn--pill btn--green" type="submit">Agregar Alumno</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

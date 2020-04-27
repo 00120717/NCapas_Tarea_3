@@ -17,44 +17,51 @@ public class MainController {
 	
 	@RequestMapping("/ingresar")
 	public String index() {
-		return "index";
+		return "login";
 	}
 	
 	@RequestMapping("/data")
-	public ModelAndView parametros4(@RequestParam String nombres, @RequestParam String apellidos, @RequestParam String paramfecha, @RequestParam String lugarNac, @RequestParam String colegio, @RequestParam String tel, @RequestParam String cel) throws ParseException {
-		ModelAndView mav = new ModelAndView();
-		List<String> lista = new ArrayList<>();
+	public ModelAndView parametros(@RequestParam String nombres, @RequestParam String apellidos, 
+			@RequestParam String paramfecha, @RequestParam String lugarNac, @RequestParam String colegio, 
+			@RequestParam String tel, @RequestParam String cel) throws ParseException {
 		
-		DateFormat date = new SimpleDateFormat("yyyy-MM-dd");
-		Date fecha = date.parse(paramfecha);
-		Date minFecha = date.parse("2003-01-01");
+		ModelAndView mav = new ModelAndView();
+		List<String> errorList = new ArrayList<>();
 		
 		
 		if(nombres.length() < 1 || nombres.length() > 25) {
-			lista.add("Nombres mínimo 1 carácter y máximo 25 caracteres");
+			errorList.add("Nombres mínimo 1 carácter y máximo 25 caracteres");
 		}
 		if(apellidos.length() < 1 || apellidos.length() > 25) {
-			lista.add("Apellidos mínimo 1 carácter y máximo 25 caracteres");
+			errorList.add("Apellidos mínimo 1 carácter y máximo 25 caracteres");
 		}
-		if(fecha.before(minFecha)) {
-			lista.add("Fecha de Nacimiento no puede ser menor al 1 de enero de 2003");
+		if(paramfecha.equals("")) {
+			errorList.add("Fecha de Nacimiento no puede ser menor al 1 de enero de 2003");
+		}else {
+			DateFormat date = new SimpleDateFormat("yyyy-MM-dd");
+			Date fecha = date.parse(paramfecha);
+			Date minFecha = date.parse("2003-01-01");
+			if(fecha.before(minFecha)) {
+				errorList.add("Fecha de Nacimiento no puede ser menor al 1 de enero de 2003");
+			}
 		}
 		
 		if(lugarNac.length() < 1 || lugarNac.length() > 25) {
-			lista.add("Lugar de Nacimiento mínimo 1 carácter y máximo 25 caracteres");
+			errorList.add("Lugar de Nacimiento mínimo 1 carácter y máximo 25 caracteres");
 		}
 		if(colegio.length() < 1 || colegio.length() > 100) {
-			lista.add("Instituto o Colegio de procedencia mínimo 1 carácter y máximo 100 caracteres");
+			errorList.add("Instituto o Colegio de procedencia mínimo 1 carácter y máximo 100 caracteres");
 		}
 		if(tel.length() != 8) {
-			lista.add("Teléfono fijo 8 números exactamente");
+			errorList.add("Teléfono fijo 8 números exactamente");
 		}
 		if(cel.length() != 8) {
-			lista.add("Teléfono móvil 8 números exactamente");
+			errorList.add("Teléfono móvil 8 números exactamente");
 		}
+
 		
-		if(lista.size() != 0) {
-			mav.addObject("errorlist", lista);
+		if( errorList.size() != 0 ) {
+			mav.addObject("errorlist", errorList);
 			mav.setViewName("/incorrect");
 			return mav;
 		}
